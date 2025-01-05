@@ -55,21 +55,4 @@ The project consists of the following main components:
 - **PUT /api/trails/{trail_id}:** Update an existing trail.
 - **DELETE /api/trails/{trail_id}:** Delete a trail.
 
-## Environment Variables
-To run the application, you need to set the following environment variables:
 
-- **DB_HOST**: The hostname or IP address of your database server (`DIST-6-505.uopnet.plymouth.ac.uk`).
-- **DB_NAME**: The name of your database (`COMP2001_KAdamczyk`).
-- **DB_USER**: The username used to connect to the database (`KAdamczyk`).
-- **DB_PASSWORD**: The password used to connect to the database.
-
-Example command to run the Docker container with environment variables:
-
-```bash
-docker run -d -p 5000:8000 \
-  --name trail-service-container \
-  -e DB_HOST='DIST-6-505.uopnet.plymouth.ac.uk' \
-  -e DB_NAME='COMP2001_KAdamczyk' \
-  -e DB_USER='KAdamczyk' \
-  -e DB_PASSWORD='my_db_password' \
-  kacper2110/trail-service
