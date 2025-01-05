@@ -1,5 +1,3 @@
-# COMP2001_CW2
-
 # TrailService Micro-Service
 
 ## Overview
@@ -13,7 +11,7 @@ The project consists of the following main components:
 - `requirements.txt`: Specifies project dependencies.
 - `Dockerfile`: Defines the steps to create a Docker image.
 - `templates/`: Contains HTML templates.
-- `static/`: Contains static files such as Swagger YAML file.
+- `static/`: Contains static files such as the Swagger YAML file.
 - `README.md`: This file.
 
 ## Features
@@ -37,16 +35,16 @@ The project consists of the following main components:
 
 2. **Build the Docker image:**
     ```bash
-    docker build -t trail-service .
+    docker build -t kacper2110/trail-service .
     ```
 
 3. **Run the Docker container:**
     ```bash
-    docker run -d -p 8000:8000 --name trail-service-container trail-service
+    docker run -d -p 5000:8000 --name trail-service-container kacper2110/trail-service
     ```
 
 4. **Access the application:**
-    Open your browser and navigate to `http://localhost:8000`.
+    Open your browser and navigate to `http://localhost:5000/swagger`.
 
 ## API Endpoints
 - **POST /api/login:** Authenticate a user.
@@ -58,6 +56,20 @@ The project consists of the following main components:
 - **DELETE /api/trails/{trail_id}:** Delete a trail.
 
 ## Environment Variables
-To set up the environment variables, you can pass them when running the Docker container:
+To run the application, you need to set the following environment variables:
+
+- **DB_HOST**: The hostname or IP address of your database server (`DIST-6-505.uopnet.plymouth.ac.uk`).
+- **DB_NAME**: The name of your database (`COMP2001_KAdamczyk`).
+- **DB_USER**: The username used to connect to the database (`KAdamczyk`).
+- **DB_PASSWORD**: The password used to connect to the database.
+
+Example command to run the Docker container with environment variables:
+
 ```bash
-docker run -d -p 8000:8000 --name trail-service-container -e DB_HOST=your_db_host -e DB_NAME=your_db_name trail-service
+docker run -d -p 5000:8000 \
+  --name trail-service-container \
+  -e DB_HOST='DIST-6-505.uopnet.plymouth.ac.uk' \
+  -e DB_NAME='COMP2001_KAdamczyk' \
+  -e DB_USER='KAdamczyk' \
+  -e DB_PASSWORD='my_db_password' \
+  kacper2110/trail-service
