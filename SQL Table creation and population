@@ -1,0 +1,77 @@
+-- Drop existing tables to avoid conflicts
+DROP TABLE IF EXISTS CW2.TRAIL_FEATURE;
+DROP TABLE IF EXISTS CW2.FEATURE;
+DROP TABLE IF EXISTS CW2.TRAIL;
+DROP TABLE IF EXISTS CW2.APP_USER;
+
+-- Recreate tables
+CREATE TABLE CW2.APP_USER (
+    UserID int PRIMARY KEY,
+    Email_address varchar(255) NOT NULL,
+    Role varchar(50) NOT NULL
+);
+
+CREATE TABLE CW2.TRAIL (
+    TrailID int IDENTITY(1,1) PRIMARY KEY, -- Set TrailID to auto-increment
+    TrailName varchar(255) NOT NULL,
+    TrailSummary varchar(255),
+    TrailDescription varchar(255),
+    Difficulty varchar(50),
+    Location varchar(255),
+    Length float,
+    ElevationGain float,
+    RouteType varchar(50),
+    OwnerID int,
+    Pt1_Lat float,
+    Pt1_Long float,
+    Pt1_Desc varchar(255),
+    Pt2_Lat float,
+    Pt2_Long float,
+    Pt2_Desc varchar(255),
+    FOREIGN KEY (OwnerID) REFERENCES CW2.APP_USER(UserID)
+);
+
+CREATE TABLE CW2.FEATURE (
+    TrailFeatureID int PRIMARY KEY,
+    TrailFeature varchar(255) NOT NULL
+);
+
+CREATE TABLE CW2.TRAIL_FEATURE (
+    TrailID int,
+    TrailFeatureID int,
+    FOREIGN KEY (TrailID) REFERENCES CW2.TRAIL(TrailID),
+    FOREIGN KEY (TrailFeatureID) REFERENCES CW2.FEATURE(TrailFeatureID)
+);
+
+-- Insert Data into FEATURE Table
+INSERT INTO CW2.FEATURE (TrailFeatureID, TrailFeature) VALUES (1, 'Waterfall');
+INSERT INTO CW2.FEATURE (TrailFeatureID, TrailFeature) VALUES (2, 'Scenic View');
+INSERT INTO CW2.FEATURE (TrailFeatureID, TrailFeature) VALUES (3, 'Bridge');
+INSERT INTO CW2.FEATURE (TrailFeatureID, TrailFeature) VALUES (4, 'Cave');
+
+-- Insert Data into APP_USER Table
+INSERT INTO CW2.APP_USER (UserID, Email_address, Role) VALUES (1, 'grace@plymouth.ac.uk', 'admin');
+INSERT INTO CW2.APP_USER (UserID, Email_address, Role) VALUES (2, 'tim@plymouth.ac.uk', 'user');
+INSERT INTO CW2.APP_USER (UserID, Email_address, Role) VALUES (3, 'ada@plymouth.ac.uk', 'user');
+
+-- Insert Data into TRAIL Table
+INSERT INTO CW2.TRAIL (TrailName, TrailSummary, TrailDescription, Difficulty, Location, Length, ElevationGain, RouteType, OwnerID, Pt1_Lat, Pt1_Long, Pt1_Desc, Pt2_Lat, Pt2_Long, Pt2_Desc)
+VALUES ('Blue Ridge', 'A scenic trail', 'The Blue Ridge Trail offers', 'Medium', 'Blue Ridge Park', 5.4, 350, 'Loop', 1, 35.678, -83.456, 'Starting point', 35.690, -83.460, 'Overlook point');
+
+INSERT INTO CW2.TRAIL (TrailName, TrailSummary, TrailDescription, Difficulty, Location, Length, ElevationGain, RouteType, OwnerID, Pt1_Lat, Pt1_Long, Pt1_Desc, Pt2_Lat, Pt2_Long, Pt2_Desc)
+VALUES ('Green Valley', 'A lush valley', 'The Green Valley Trail goes', 'Easy', 'Green Valley', 3.2, 120, 'Out & Back', 2, 36.234, -82.789, 'Valley entrance', 36.240, -82.790, 'River crossing');
+
+INSERT INTO CW2.TRAIL (TrailName, TrailSummary, TrailDescription, Difficulty, Location, Length, ElevationGain, RouteType, OwnerID, Pt1_Lat, Pt1_Long, Pt1_Desc, Pt2_Lat, Pt2_Long, Pt2_Desc)
+VALUES ('Sunset Peak', 'A breathtaking peak', 'The Sunset Peak Trail offers stunning views', 'Hard', 'Sunset Mountain', 7.8, 500, 'Loop', 3, 35.789, -83.567, 'Base camp', 35.800, -83.570, 'Peak point');
+
+INSERT INTO CW2.TRAIL (TrailName, TrailSummary, TrailDescription, Difficulty, Location, Length, ElevationGain, RouteType, OwnerID, Pt1_Lat, Pt1_Long, Pt1_Desc, Pt2_Lat, Pt2_Long, Pt2_Desc)
+VALUES ('Forest Trail', 'A serene forest trail', 'The Forest Trail takes you through lush greenery', 'Easy', 'Greenwood Forest', 4.5, 200, 'Out & Back', 1, 36.345, -82.345, 'Trailhead', 36.350, -82.350, 'Deep woods');
+
+-- Insert Data into TRAIL_FEATURE Table
+INSERT INTO CW2.TRAIL_FEATURE (TrailID, TrailFeatureID) VALUES (1, 1);
+INSERT INTO CW2.TRAIL_FEATURE (TrailID, TrailFeatureID) VALUES (1, 2);
+INSERT INTO CW2.TRAIL_FEATURE (TrailID, TrailFeatureID) VALUES (2, 2);
+INSERT INTO CW2.TRAIL_FEATURE (TrailID, TrailFeatureID) VALUES (3, 3);
+INSERT INTO CW2.TRAIL_FEATURE (TrailID, TrailFeatureID) VALUES (4, 4);
+
+
