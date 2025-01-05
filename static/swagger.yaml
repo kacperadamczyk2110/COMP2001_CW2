@@ -1,0 +1,180 @@
+swagger: '2.0'
+info:
+  title: Trail Service API
+  description: API documentation for the Trail Service application.
+  version: 1.0.0
+basePath: /api
+schemes:
+  - http
+  - https
+securityDefinitions:
+  basicAuth:
+    type: basic
+    name: Authorization
+    in: header
+tags:
+  - name: "trails"
+    description: "Operations about trails"
+paths:
+  /trails:
+    get:
+      tags:
+        - "trails"
+      summary: Get all trails
+      responses:
+        200:
+          description: A list of trails
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Trail'
+    post:
+      tags:
+        - "trails"
+      summary: Create a new trail
+      security:
+        - basicAuth: []
+      parameters:
+        - in: body
+          name: trail
+          description: The trail to create
+          required: true
+          schema:
+            $ref: '#/definitions/NewTrail'
+      responses:
+        201:
+          description: The created trail
+  /trails/{id}:
+    get:
+      tags:
+        - "trails"
+      summary: Get a trail by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: The trail ID
+      responses:
+        200:
+          description: The trail
+          schema:
+            $ref: '#/definitions/Trail'
+        404:
+          description: Trail not found
+    put:
+      tags:
+        - "trails"
+      summary: Update a trail by ID
+      security:
+        - basicAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: The trail ID
+        - in: body
+          name: trail
+          description: The trail details to update
+          required: true
+          schema:
+            $ref: '#/definitions/NewTrail'
+      responses:
+        200:
+          description: The updated trail
+    delete:
+      tags:
+        - "trails"
+      summary: Delete a trail by ID
+      security:
+        - basicAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: The trail ID
+      responses:
+        204:
+          description: Trail deleted
+        404:
+          description: Trail not found
+
+definitions:
+  Trail:
+    type: object
+    properties:
+      TrailID:
+        type: integer
+      TrailName:
+        type: string
+      TrailSummary:
+        type: string
+      TrailDescription:
+        type: string
+      Difficulty:
+        type: string
+      Location:
+        type: string
+      Length:
+        type: number
+      ElevationGain:
+        type: number
+      RouteType:
+        type: string
+      OwnerID:
+        type: integer
+      Locations:
+        type: array
+        items:
+          $ref: '#/definitions/LocationPoint'
+      Features:
+        type: array
+        items:
+          $ref: '#/definitions/Feature'
+  NewTrail:
+    type: object
+    properties:
+      TrailName:
+        type: string
+      TrailSummary:
+        type: string
+      TrailDescription:
+        type: string
+      Difficulty:
+        type: string
+      Location:
+        type: string
+      Length:
+        type: number
+      ElevationGain:
+        type: number
+      RouteType:
+        type: string
+      Locations:
+        type: array
+        items:
+          $ref: '#/definitions/LocationPoint'
+      Features:
+        type: array
+        items:
+          $ref: '#/definitions/Feature'
+  LocationPoint:
+    type: object
+    properties:
+      LocationPoint:
+        type: integer
+      Latitude:
+        type: number
+      Longitude:
+        type: number
+      Description:
+        type: string
+  Feature:
+    type: object
+    properties:
+      TrailFeatureID:
+        type: integer
+      TrailFeature:
+        type: string
